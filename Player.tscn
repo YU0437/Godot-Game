@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://l0rqitbv48c1"]
+
+[ext_resource type="Script" uid="uid://c7e13715ecfqj" path="res://Script/playerMove.cs" id="1_kpjcp"]
+[ext_resource type="Texture2D" uid="uid://bncgtxn184nxi" path="res://AssetBundle/Sprites/Foxy.png" id="1_xhfnw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhfnw"]
+atlas = ExtResource("1_xhfnw")
+region = Rect2(0, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kpjcp"]
+atlas = ExtResource("1_xhfnw")
+region = Rect2(33, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kne1u"]
+atlas = ExtResource("1_xhfnw")
+region = Rect2(66, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e80uo"]
+atlas = ExtResource("1_xhfnw")
+region = Rect2(99, 0, 33, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cxr5p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xhfnw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kpjcp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kne1u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e80uo")
+}],
+"loop": true,
+"name": &"idel",
+"speed": 12.0
+}]
+
+[node name="player" type="CharacterBody2D"]
+script = ExtResource("1_kpjcp")
+MoveSpeed = 10.125
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_cxr5p")
+animation = &"idel"
+autoplay = "idel"
