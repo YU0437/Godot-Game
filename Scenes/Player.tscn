@@ -1,0 +1,149 @@
+[gd_scene load_steps=21 format=3 uid="uid://bhumno28yxrxx"]
+
+[ext_resource type="Script" uid="uid://c7e13715ecfqj" path="res://Script/Player/playerMove.cs" id="1_gntrk"]
+[ext_resource type="Texture2D" uid="uid://bncgtxn184nxi" path="res://AssetBundle/Sprites/Foxy.png" id="2_dewec"]
+[ext_resource type="Script" uid="uid://b0jhi2u1qmvu6" path="res://Script/Player/playerAnimation.cs" id="3_5ixxa"]
+[ext_resource type="Script" uid="uid://cylmix6aolodj" path="res://Script/Shot.cs" id="4_dewec"]
+[ext_resource type="PackedScene" uid="uid://wx5sqguq6nf5" path="res://Scenes/Bullet.tscn" id="5_5ixxa"]
+[ext_resource type="Resource" uid="uid://ctgubjjvwek40" path="res://resource/PlayerBulletConfigRes.tres" id="5_nn08x"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gntrk"]
+atlas = ExtResource("2_dewec")
+region = Rect2(0, 128, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dewec"]
+atlas = ExtResource("2_dewec")
+region = Rect2(33, 128, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhfnw"]
+atlas = ExtResource("2_dewec")
+region = Rect2(0, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kpjcp"]
+atlas = ExtResource("2_dewec")
+region = Rect2(33, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kne1u"]
+atlas = ExtResource("2_dewec")
+region = Rect2(66, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e80uo"]
+atlas = ExtResource("2_dewec")
+region = Rect2(99, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cxr5p"]
+atlas = ExtResource("2_dewec")
+region = Rect2(0, 32, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tdg3f"]
+atlas = ExtResource("2_dewec")
+region = Rect2(33, 32, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dtqjt"]
+atlas = ExtResource("2_dewec")
+region = Rect2(66, 32, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ncpa"]
+atlas = ExtResource("2_dewec")
+region = Rect2(99, 32, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wi0c6"]
+atlas = ExtResource("2_dewec")
+region = Rect2(132, 32, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hp6x6"]
+atlas = ExtResource("2_dewec")
+region = Rect2(165, 32, 33, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cxr5p"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_gntrk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dewec")
+}],
+"loop": true,
+"name": &"hurt",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xhfnw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kpjcp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kne1u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e80uo")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cxr5p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tdg3f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dtqjt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ncpa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wi0c6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hp6x6")
+}],
+"loop": true,
+"name": &"run",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kne1u"]
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("PlayerAnimation", "sprite")]
+collision_layer = 2
+script = ExtResource("1_gntrk")
+MoveSpeed = 100.0
+PlayerAnimation = NodePath("PlayerAnimation")
+sprite = NodePath("AnimatedSprite2D")
+metadata/_edit_lock_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-4, -4)
+sprite_frames = SubResource("SpriteFrames_cxr5p")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.889635
+
+[node name="PlayerAnimation" type="Node" parent="." node_paths=PackedStringArray("CharacterSprite")]
+script = ExtResource("3_5ixxa")
+CharacterSprite = NodePath("../AnimatedSprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, 1)
+rotation = 4.37541
+shape = SubResource("CircleShape2D_kne1u")
+
+[node name="Shot" type="Node2D" parent="." node_paths=PackedStringArray("Muzzle")]
+script = ExtResource("4_dewec")
+BulletConfig = ExtResource("5_nn08x")
+BulletScene = ExtResource("5_5ixxa")
+Muzzle = NodePath("Muzzle")
+
+[node name="ShotTimer" type="Timer" parent="Shot"]
+
+[node name="Muzzle" type="Marker2D" parent="Shot"]
+position = Vector2(11, 3)
+gizmo_extents = 0.0
+metadata/_edit_lock_ = true

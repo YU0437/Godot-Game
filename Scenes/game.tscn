@@ -1,24 +1,134 @@
-[gd_scene load_steps=3 format=3 uid="uid://byu7axh7rbpoj"]
+[gd_scene load_steps=15 format=3 uid="uid://byu7axh7rbpoj"]
 
 [ext_resource type="Texture2D" uid="uid://c81xqhk525786" path="res://AssetBundle/Sprites/ForestBackground.png" id="1_ebmjs"]
-[ext_resource type="PackedScene" uid="uid://l0rqitbv48c1" path="res://Player.tscn" id="2_qxrlw"]
+[ext_resource type="PackedScene" uid="uid://bhumno28yxrxx" path="res://Scenes/Player.tscn" id="3_3dryh"]
+[ext_resource type="Script" uid="uid://cnb2gwwgovmh6" path="res://Script/Manager/GameManager.cs" id="3_wowpa"]
+[ext_resource type="PackedScene" uid="uid://cf6i2blh4vvlw" path="res://Scenes/Slime.tscn" id="3_wrm1d"]
+[ext_resource type="Script" uid="uid://bj2qjf55103hd" path="res://Script/Manager/EnemyManager.cs" id="4_i6g32"]
+[ext_resource type="Script" uid="uid://ch8xcivlnufir" path="res://Script/Manager/UIManager.cs" id="6_h4fw4"]
+[ext_resource type="Script" uid="uid://dvpciyjq1lltp" path="res://Script/Manager/PlayerManager.cs" id="6_i6g32"]
+[ext_resource type="Resource" uid="uid://hpe41854n8rw" path="res://resource/PlayerConfigRes.tres" id="6_rfjv2"]
+[ext_resource type="Texture2D" uid="uid://bhs3620hcsq30" path="res://AssetBundle/UI/coin_icon.png" id="7_1l0tm"]
+[ext_resource type="FontFile" uid="uid://dnl67n3h8kyj7" path="res://AssetBundle/Uranus_Pixel_11Px.ttf" id="8_v158k"]
+[ext_resource type="Texture2D" uid="uid://b3o0q0wo7vcks" path="res://AssetBundle/UI/HpBar.tres" id="10_ldgsr"]
+[ext_resource type="Texture2D" uid="uid://rfp66c2na1ba" path="res://AssetBundle/Sprites/emptyHpBar.tres" id="10_o5yvi"]
+[ext_resource type="Script" uid="uid://c2sdgp0s4ji2o" path="res://Script/CameraController.cs" id="12_rku1e"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qxrlw"]
+distance = -119.021
 
 [node name="Node2D" type="Node2D"]
+y_sort_enabled = true
 metadata/_edit_horizontal_guides_ = [260.0]
 
-[node name="ForestBackground" type="Sprite2D" parent="."]
+[node name="Player" parent="." instance=ExtResource("3_3dryh")]
+z_index = 5
+position = Vector2(-25, 18)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(29, -39)
+scale = Vector2(1.963, -4.14027)
+zoom = Vector2(2.39, 2.39)
+position_smoothing_enabled = true
+script = ExtResource("12_rku1e")
+
+[node name="Boundary" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Boundary"]
+position = Vector2(1, 117)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_qxrlw")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Boundary"]
+position = Vector2(-124, -17)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Boundary/StaticBody2D2"]
+position = Vector2(-99, 16)
+rotation = 1.57159
+shape = SubResource("WorldBoundaryShape2D_qxrlw")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Boundary"]
+position = Vector2(1, -202)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Boundary/StaticBody2D3"]
+position = Vector2(0, 124)
+rotation = -3.13283
+shape = SubResource("WorldBoundaryShape2D_qxrlw")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Boundary"]
+position = Vector2(80.0453, -49.8548)
+scale = Vector2(1.06716, 1.11208)
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Boundary/StaticBody2D4"]
+position = Vector2(101, 46)
+rotation = -1.57079
+shape = SubResource("WorldBoundaryShape2D_qxrlw")
+metadata/_edit_lock_ = true
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="ForestBackground" type="Sprite2D" parent="Background"]
 position = Vector2(-118, -16)
 texture = ExtResource("1_ebmjs")
 metadata/_edit_lock_ = true
 
-[node name="ForestBackground2" type="Sprite2D" parent="."]
+[node name="ForestBackground2" type="Sprite2D" parent="Background"]
 position = Vector2(122, -16)
 texture = ExtResource("1_ebmjs")
 metadata/_edit_lock_ = true
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-1, -15)
-zoom = Vector2(2.39, 2.39)
+[node name="GameManager" type="Node2D" parent="."]
+script = ExtResource("3_wowpa")
 
-[node name="player" parent="Camera2D" instance=ExtResource("2_qxrlw")]
-position = Vector2(-177, 69)
+[node name="EnemyManager" type="Node2D" parent="GameManager" node_paths=PackedStringArray("GameSystem", "PlayerSystem")]
+script = ExtResource("4_i6g32")
+EnemyScene = ExtResource("3_wrm1d")
+GameSystem = NodePath("..")
+PlayerSystem = NodePath("../PlayerManager")
+
+[node name="Timer" type="Timer" parent="GameManager/EnemyManager"]
+wait_time = 0.3
+autostart = true
+
+[node name="PlayerManager" type="Node2D" parent="GameManager"]
+script = ExtResource("6_i6g32")
+playerConfig = ExtResource("6_rfjv2")
+
+[node name="UIManager" type="Node2D" parent="GameManager" node_paths=PackedStringArray("goldLabel", "HpBar")]
+script = ExtResource("6_h4fw4")
+goldLabel = NodePath("CanvasLayer/coin/ShowGold")
+HpBar = NodePath("CanvasLayer/ProgressBar")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="GameManager/UIManager"]
+
+[node name="coin" type="Node" parent="GameManager/UIManager/CanvasLayer"]
+
+[node name="CoinIcon" type="Sprite2D" parent="GameManager/UIManager/CanvasLayer/coin"]
+position = Vector2(74, 139)
+scale = Vector2(2.285, 2.285)
+texture = ExtResource("7_1l0tm")
+
+[node name="ShowGold" type="Label" parent="GameManager/UIManager/CanvasLayer/coin"]
+offset_left = 114.0
+offset_top = 132.0
+offset_right = 154.0
+offset_bottom = 156.0
+theme_override_fonts/font = ExtResource("8_v158k")
+theme_override_font_sizes/font_size = 23
+
+[node name="ProgressBar" type="TextureProgressBar" parent="GameManager/UIManager/CanvasLayer"]
+offset_left = 9.0
+offset_top = 68.0
+offset_right = 57.0
+offset_bottom = 108.0
+scale = Vector2(4.12721, 4.16531)
+value = 100.0
+texture_under = ExtResource("10_o5yvi")
+texture_progress = ExtResource("10_ldgsr")
+
+[connection signal="timeout" from="GameManager/EnemyManager/Timer" to="GameManager/EnemyManager" method="EnemyRefresh"]

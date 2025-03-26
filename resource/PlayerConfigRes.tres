@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://hpe41854n8rw"]
+
+[ext_resource type="Script" uid="uid://dy2hb5o3pilce" path="res://Script/Config/PlayerConfig.cs" id="1_y3s4x"]
+
+[resource]
+script = ExtResource("1_y3s4x")
+Ack = 1.0
+CurrentHp = 0
+Def = 0
+Hp = 100

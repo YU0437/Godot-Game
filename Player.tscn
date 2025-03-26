@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://l0rqitbv48c1"]
 
-[ext_resource type="Script" uid="uid://c7e13715ecfqj" path="res://Script/playerMove.cs" id="1_kpjcp"]
+[ext_resource type="Script" uid="uid://c7e13715ecfqj" path="res://Script/Player/playerMove.cs" id="1_kpjcp"]
 [ext_resource type="Texture2D" uid="uid://bncgtxn184nxi" path="res://AssetBundle/Sprites/Foxy.png" id="1_xhfnw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xhfnw"]

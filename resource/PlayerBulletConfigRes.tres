@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BulletConfig" load_steps=2 format=3 uid="uid://ctgubjjvwek40"]
+
+[ext_resource type="Script" uid="uid://cxrskgvd8c3ci" path="res://Script/Config/BulletConfig.cs" id="1_sh7qx"]
+
+[resource]
+script = ExtResource("1_sh7qx")
+BaseDamage = 5.0
+BulletRange = 1.0
+BulletSize = 1.0
+BulletSpeed = 200.0
+PlayerAck = 1.0
+metadata/_custom_type_script = "uid://cxrskgvd8c3ci"
